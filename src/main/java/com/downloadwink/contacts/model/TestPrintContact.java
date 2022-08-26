@@ -7,12 +7,25 @@ public class TestPrintContact {
 
     public static void main(String[] args) throws SQLException {
         ContactHome contacts = ContactHome.getInstance();
-        contacts.addContact("Ronald","Donald");
-        List<Contact> contacts1 = contacts.allContacts();
+//        contacts.addContact("Jen", "Morison");
+//        System.out.println("Added contact to database");
 
-        for(Contact contact : contacts1){
-            System.out.println(contact);
-        }
+//        Contact findContactById = contacts.findById(7);
+//        System.out.println(findContactById);
+
+//        Contact contact = contacts.findById(4);
+//        System.out.println(contact);
+//        contacts.updateContact(contact, "Mike","Ross","mile@ross.com","165465",30,"fgjfdkfjgkjfg");
+
+        Contact contactId = contacts.findById(3);
+        contacts.deleteContact(contactId);
+
+
+
+//        List<Contact> contacts1 = contacts.allContacts();
+//        for(Contact contact : contacts1){
+//            System.out.println(contact);
+//        }
 
 
 //        List<Contact> allContacts = contacts.allContacts();

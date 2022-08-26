@@ -15,7 +15,7 @@ public class AddressHome {
 
     private Connection connect;
 
-    private Connection getConnection() throws SQLException {
+    Connection getConnection() throws SQLException {
         if (connect == null) {
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/mycontacts", "root", "123");
         }
@@ -107,7 +107,11 @@ public class AddressHome {
         return saveAddress(address);
     }
 
-
-
-
+    public boolean deleteAddress(Address delAddress) throws SQLException {
+        Connection connection = getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("Delete from mycontacts.address where id = ?");
+        preparedStatement.setInt(1,delAddress.getId());
+        int result = preparedStatement.executeUpdate();
+        return result == 0 ? false : true;
+    }
 }

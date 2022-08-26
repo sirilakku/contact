@@ -47,9 +47,7 @@ public class ContactHome {
         while (resultSet.next()) {
             Contact contact = new Contact();
             extractContactFromResultSet(resultSet, contact);
-
             allContacts.add(contact);
-
         }
         statement.close();
         return allContacts;
@@ -77,6 +75,39 @@ public class ContactHome {
         }
         statement.close();
         return contact;
+    }
+
+    public Contact saveContact(Contact contact) throws SQLException {
+        Connection connect = AddressHome.getInstance().getConnection();
+        PreparedStatement preparedStatement = connect.prepareStatement("Update mycontacts.contacts set firstName=?,lastName=?,phoneNumber=?,age=?,notes=? where id=?");
+        preparedStatement.setString(1, contact.getFirstName());
+        preparedStatement.setString(2, contact.getLastName());
+        preparedStatement.setString(3,contact.getPhoneNumber());
+        preparedStatement.setInt(4,contact.getAge());
+        preparedStatement.setString(5, contact.getNotes());
+        preparedStatement.setInt(6,contact.getId());
+        preparedStatement.executeUpdate();
+        return contact;
+    }
+
+    public Contact updateContact(Contact contact,String firstName, String lastName,String primaryEmail ,String phoneNumber, int age, String notes) throws SQLException {
+        contact.setFirstName(firstName);
+        contact.setLastName(lastName);
+        EmailAddress email = new EmailAddress();
+        email.setEmail(primaryEmail);
+        contact.setPhoneNumber(phoneNumber);
+        contact.setAge(age);
+        contact.setNotes(notes);
+        return saveContact(contact);
+    }
+
+    public void deleteContact(Contact contact) throws SQLException {
+        Connection connect = ContactHome.getInstance().getConnection();
+        PreparedStatement preparedStatement = connect.prepareStatement("Delete from mycontacts.contacts where id=?");
+        preparedStatement.setInt(1,contact.getId());
+        preparedStatement.executeUpdate();
+        System.out.println("Contact Deleted " + contact.getFirstName() + " " + contact.getLastName());
+
     }
 
     private  Connection getConnection() throws SQLException {
@@ -145,27 +176,27 @@ public class ContactHome {
 //        return matchingContactsByBD;
 //    }
 
-    public Contact addNewContact(String firstName, String lastName, String personalEmail, String phone ){
-        Contact newContact = new Contact();
-        newContact.setFirstName(firstName);
-        newContact.setLastName(lastName);
-        EmailAddress emailAddress = new EmailAddress();
-        newContact.setPersonalEmail(emailAddress);
-//        EmailAddress workEmailAddress = new EmailAddress(workEmail);
-//        newContact.setWorkEmail(workEmailAddress);
-        newContact.setPhoneNumber(phone);
-        contacts.add(newContact);
-        return newContact;
-    }
+//    public Contact addNewContact(String firstName, String lastName, String personalEmail, String phone ){
+//        Contact newContact = new Contact();
+//        newContact.setFirstName(firstName);
+//        newContact.setLastName(lastName);
+//        EmailAddress emailAddress = new EmailAddress();
+//        newContact.setPersonalEmail(emailAddress);
+////        EmailAddress workEmailAddress = new EmailAddress(workEmail);
+////        newContact.setWorkEmail(workEmailAddress);
+//        newContact.setPhoneNumber(phone);
+//        contacts.add(newContact);
+//        return newContact;
+//    }
 
-    public Contact deleteContact(String firstName, String lastName, String personalEmail){
-        Contact contactToDelete = new Contact();
-        contactToDelete.getFirstName();
-        contactToDelete.getLastName();
-        contactToDelete.getPersonalEmail();
-        contacts.remove(contactToDelete);
-        return contactToDelete;
-
-    }
+//    public Contact deleteContact(String firstName, String lastName, String personalEmail){
+//        Contact contactToDelete = new Contact();
+//        contactToDelete.getFirstName();
+//        contactToDelete.getLastName();
+//        contactToDelete.getPersonalEmail();
+//        contacts.remove(contactToDelete);
+//        return contactToDelete;
+//
+//    }
 
 }
