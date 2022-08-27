@@ -61,6 +61,14 @@ public class ContactHome {
         if (personalEmailId != 0) {
             contact.setPersonalEmail(EmailAddressHome.getInstance().findById(personalEmailId));
         }
+        int workEmailId = resultSet.getInt(("workEmailId"));
+        if(workEmailId != 0 ){
+            contact.setWorkEmail(EmailAddressHome.getInstance().findById(workEmailId));
+        }
+        contact.setPhoneNumber(resultSet.getString("phoneNumber"));
+        contact.setAge(resultSet.getInt("age"));
+        contact.setNotes(resultSet.getString("notes"));
+
     }
     public Contact findById(int id) throws SQLException {
 

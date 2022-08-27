@@ -31,6 +31,8 @@ public class EditContactPanel extends JPanel {
         lastNameField.setColumns(15);
         jPanel.add(lastNameField);
 
+
+
         saveButton = new JButton();
         saveButton.setText("Save");
         this.add(saveButton,BorderLayout.SOUTH);
